@@ -17,10 +17,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="bg-gray-100">
+
 <div class="flex h-screen">
-    @include('partials.sidebar')
     <main class="flex-1 overflow-y-auto">
-{{--        @include('partials.navbar')--}}
+        @include('partials.sidebar')
         <div class="p-6">
             @yield('content')
         </div>

@@ -1,3 +1,4 @@
+{{-- auth/login.blade.php --}}
 @extends('layouts.auth')
 
 @section('title', 'Login - Controle de Vacinação')
@@ -10,7 +11,7 @@
             <form @submit.prevent="validateLogin">
                 <div class="mb-4">
                     <label for="login" class="block text-gray-700 text-sm font-bold mb-2">Login</label>
-                    <!-- O valor inicial é definido no x-data e vinculado via x-model -->
+
                     <input type="text" id="login" name="login" x-model="login"
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <span x-show="errors.login" class="text-red-500 text-sm mt-1" x-text="errors.login"></span>
@@ -41,8 +42,8 @@
     <script>
         function loginHandler() {
             return {
-                login: 'admin', // Valor inicial para o campo de login
-                senha: 'admin', // Valor inicial para o campo de senha
+                login: 'admin',
+                senha: 'admin',
                 showPassword: false,
                 errors: {
                     login: '',
@@ -52,7 +53,7 @@
                     this.showPassword = !this.showPassword;
                 },
                 validateLogin() {
-                    this.errors = { login: '', senha: '' }; // Reset errors
+                    this.errors = { login: '', senha: '' };
                     if (this.login === '') {
                         this.errors.login = 'O login é obrigatório.';
                     }
