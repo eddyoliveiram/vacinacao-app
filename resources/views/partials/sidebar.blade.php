@@ -1,54 +1,90 @@
-{{-- partials/sidebar.blade.php --}}
-<nav class="bg-blue-600 text-white p-4 flex justify-between items-center">
-    <div class="flex items-center">
-        <h1 class="text-2xl font-bold">Vacinação App</h1>
+<div class="flex h-screen">
+    <!-- Sidebar para desktop -->
+    <div class="w-64 bg-blue-800 text-white hidden md:block">
+        <div class="p-4">
+            <h2 class="text-2xl font-semibold mb-4">Vacinação App</h2>
+            <ul>
+                <li>
+                    <a href="{{ route('dashboard') }}" class="hover:bg-blue-700 p-2 block text-white">
+                        <i class="fas fa-chart-line mr-2"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('controle') }}" class="hover:bg-blue-700 p-2 block text-white">
+                        <i class="fas fa-clipboard-list mr-2"></i> Controle de Vacinação
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('funcionarios') }}" class="hover:bg-blue-700 p-2 block text-white">
+                        <i class="fas fa-users mr-2"></i> Funcionários
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('vacinas') }}" class="hover:bg-blue-700 p-2 block text-white">
+                        <i class="fas fa-syringe mr-2"></i> Vacinas
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="confirmLogout()" class="hover:bg-blue-700 p-2 block text-white">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 
-    <ul class="hidden md:flex space-x-6">
-        <li>
-            <a href="{{ route('dashboard') }}" class="hover:bg-blue-700 transition duration-200 px-4 py-2 rounded">
-                <i class="fas fa-chart-line mr-2"></i> Dashboard
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('controle') }}" class="hover:bg-blue-700 transition duration-200 px-4 py-2 rounded">
-                <i class="fas fa-clipboard-list mr-2"></i> Controle de Vacinação
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('funcionarios') }}" class="hover:bg-blue-700 transition duration-200 px-4 py-2 rounded">
-                <i class="fas fa-users mr-2"></i> Funcionários
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('vacinas') }}" class="hover:bg-blue-700 transition duration-200 px-4 py-2 rounded">
-                <i class="fas fa-syringe mr-2"></i> Vacinas
-            </a>
-        </li>
-        <li>
-            <a href="#" onclick="confirmLogout()" class="hover:bg-blue-700 transition duration-200 px-4 py-2 rounded">
-                <i class="fas fa-sign-out-alt mr-2"></i> Logout
-            </a>
-        </li>
-    </ul>
+    <div class="flex-1 bg-gray-100 py-2 px-2">
+        <button class="md:hidden text-white bg-blue-500 p-2 rounded" id="menu-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
+    </div>
 
-    <button id="menuToggle" class="text-white focus:outline-none md:hidden">
-        <i class="fas fa-bars fa-2x"></i>
-    </button>
-</nav>
-
-<div id="mobileMenu" class="fixed inset-0 bg-blue-600 bg-opacity-95 text-white hidden z-50 flex flex-col items-center justify-center">
-    <button id="closeMenu" class="absolute top-4 right-4 text-3xl">
-        <i class="fas fa-times"></i>
-    </button>
-    <nav class="space-y-6 text-center">
-        <a href="{{ route('dashboard') }}" class="text-2xl hover:bg-blue-700 transition duration-200 px-6 py-2 rounded">Dashboard</a>
-        <a href="{{ route('controle') }}" class="text-2xl hover:bg-blue-700 transition duration-200 px-6 py-2 rounded">Controle de Vacinação</a>
-        <a href="{{ route('funcionarios') }}" class="text-2xl hover:bg-blue-700 transition duration-200 px-6 py-2 rounded">Funcionários</a>
-        <a href="{{ route('vacinas') }}" class="text-2xl hover:bg-blue-700 transition duration-200 px-6 py-2 rounded">Vacinas</a>
-        <a href="#" onclick="confirmLogout()" class="text-2xl hover:bg-blue-700 transition duration-200 px-6 py-2 rounded">Logout</a>
-    </nav>
+    <!-- Sidebar mobile -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" id="mobileMenu">
+        <div class="w-64 bg-blue-800 h-full" id="mobile-sidebar">
+            <div class="p-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-semibold mb-4 mt-3 text-white">Vacinação App</h2>
+                    <button id="close-menu" class="bg-white  p-2 rounded text-black">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+                <ul class="mt-4">
+                    <li>
+                        <a href="{{ route('dashboard') }}" class="hover:bg-blue-700 p-2 block text-white">
+                            <i class="fas fa-chart-line mr-2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('controle') }}" class="hover:bg-blue-700 p-2 block text-white">
+                            <i class="fas fa-clipboard-list mr-2"></i> Controle de Vacinação
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('funcionarios') }}" class="hover:bg-blue-700 p-2 block text-white">
+                            <i class="fas fa-users mr-2"></i> Funcionários
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('vacinas') }}" class="hover:bg-blue-700 p-2 block text-white">
+                            <i class="fas fa-syringe mr-2"></i> Vacinas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="confirmLogout()" class="hover:bg-blue-700 p-2 block text-white">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <script>
     function confirmLogout() {
@@ -68,16 +104,25 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-        const menuToggle = document.getElementById('menuToggle');
+        const menuToggle = document.getElementById('menu-toggle'); // Corrigido o ID
         const mobileMenu = document.getElementById('mobileMenu');
-        const closeMenu = document.getElementById('closeMenu');
+        const closeMenu = document.getElementById('close-menu');
 
+        // Toggle do menu mobile ao clicar no botão de abrir
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
 
+        // Fechar o menu ao clicar no botão de fechar
         closeMenu.addEventListener('click', () => {
             mobileMenu.classList.add('hidden');
+        });
+
+        // Certifique-se de que ao clicar nos links, o menu mobile seja fechado
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden'); // Fecha o menu
+            });
         });
     });
 </script>

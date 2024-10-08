@@ -19,8 +19,8 @@
 <body class="bg-gray-100">
 
 <div class="flex h-screen">
+    @include('partials.sidebar')
     <main class="flex-1 overflow-y-auto">
-        @include('partials.sidebar')
         <div class="p-6">
             @yield('content')
         </div>
