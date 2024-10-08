@@ -12,10 +12,10 @@ class Funcionario extends Model
     protected $table = 'funcionarios';
 
     protected $fillable = [
-        'CPF',
+        'cpf',
         'nome_completo',
         'data_nascimento',
-        'portador_comorbidade',
+        'comorbidade',
     ];
 
     public function vacinas()

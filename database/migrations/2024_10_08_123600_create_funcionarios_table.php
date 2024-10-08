@@ -13,7 +13,7 @@ class CreateFuncionariosTable extends Migration
             $table->string('cpf')->unique();
             $table->string('nome_completo');
             $table->date('data_nascimento');
-            $table->boolean('portador_comorbidade')->default(false);
+            $table->boolean('comorbidade')->default(false);
             $table->timestamps();
         });
     }

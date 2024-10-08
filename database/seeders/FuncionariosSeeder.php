@@ -4,23 +4,21 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Funcionario;
+use Faker\Factory as Faker;
 
 class FuncionariosSeeder extends Seeder
 {
     public function run()
     {
-        Funcionario::create([
-            'cpf' => '12345678901',
-            'nome_completo' => 'João Silva',
-            'data_nascimento' => '1985-05-15',
-            'portador_comorbidade' => false
-        ]);
+        $faker = Faker::create('pt_BR');
 
-        Funcionario::create([
-            'cpf' => '10987654321',
-            'nome_completo' => 'Maria Santos',
-            'data_nascimento' => '1990-09-10',
-            'portador_comorbidade' => true
-        ]);
+        for ($i = 0; $i < 10; $i++) {
+            Funcionario::create([
+                'cpf' => $faker->cpf,
+                'nome_completo' => $faker->name,
+                'data_nascimento' => $faker->date('Y-m-d', '2000-01-01'),
+                'comorbidade' => $faker->boolean
+            ]);
+        }
     }
 }
