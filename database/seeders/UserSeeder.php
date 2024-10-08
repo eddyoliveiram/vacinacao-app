@@ -21,19 +21,10 @@ class UserSeeder extends Seeder
             'name' => 'Admin User',
             'login' => 'admin',
             'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('admin'),
             'role' => 'admin'
         ]);
-
-        for ($i = 0; $i < 10; $i++) {
-            User::create([
-                'name' => $faker->name,
-                'login' => $faker->userName,
-                'email' => $faker->unique()->safeEmail,
-                'password' => Hash::make('password'),
-                'role' => 'editor'
-            ]);
-        }
+        
     }
 }
 

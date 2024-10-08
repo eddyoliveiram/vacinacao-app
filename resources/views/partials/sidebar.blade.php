@@ -84,42 +84,4 @@
         </div>
     </div>
 </div>
-
-
-<script>
-    function confirmLogout() {
-        Swal.fire({
-            text: "Deseja realmente sair do sistema?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sim, desejo!',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "{{ route('logout') }}";
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const closeMenu = document.getElementById('close-menu');
-
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        closeMenu.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-        });
-
-        document.querySelectorAll('#mobileMenu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-    });
-</script>
+<script src="{{ asset('js/auth/logout.js') }}"></script>

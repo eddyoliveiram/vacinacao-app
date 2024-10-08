@@ -13,27 +13,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Página de login
-Route::get('/', function () {
-    return view('auth.login');
-})->name('login');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+    Route::get('/', function () {
+        return view('auth.login');
+    })->name('login');
 
-Route::get('/funcionarios', function () {
-    return view('funcionarios');
-})->name('funcionarios');
 
-Route::get('/vacinas', function () {
-    return view('vacinas');
-})->name('vacinas');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-Route::get('/controle', function () {
-    return view('controle');
-})->name('controle');
+    Route::get('/funcionarios', function () {
+        return view('funcionarios');
+    })->name('funcionarios');
 
-Route::get('/logout', function () {
-    return redirect()->route('login');
-})->name('logout');
+    Route::get('/vacinas', function () {
+        return view('vacinas');
+    })->name('vacinas');
+
+    Route::get('/controle', function () {
+        return view('controle');
+    })->name('controle');
+
+    Route::get('/logout', function () {
+        return redirect()->route('login');
+    })->name('logout');
+
