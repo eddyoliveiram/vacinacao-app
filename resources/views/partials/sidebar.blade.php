@@ -104,24 +104,21 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-        const menuToggle = document.getElementById('menu-toggle'); // Corrigido o ID
+        const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobileMenu');
         const closeMenu = document.getElementById('close-menu');
 
-        // Toggle do menu mobile ao clicar no botão de abrir
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Fechar o menu ao clicar no botão de fechar
         closeMenu.addEventListener('click', () => {
             mobileMenu.classList.add('hidden');
         });
 
-        // Certifique-se de que ao clicar nos links, o menu mobile seja fechado
         document.querySelectorAll('#mobileMenu a').forEach(link => {
             link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden'); // Fecha o menu
+                mobileMenu.classList.add('hidden');
             });
         });
     });
