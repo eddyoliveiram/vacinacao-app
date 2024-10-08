@@ -5,22 +5,22 @@
             <h2 class="text-2xl font-semibold mb-4">Vacinação App</h2>
             <ul>
                 <li>
-                    <a href="{{ route('dashboard') }}" class="hover:bg-blue-700 p-2 block text-white">
+                    <a href="{{ route('dashboard.index') }}" class="hover:bg-blue-700 p-2 block text-white">
                         <i class="fas fa-chart-line mr-2"></i> Dashboard
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('controle') }}" class="hover:bg-blue-700 p-2 block text-white">
+                    <a href="{{ route('controles.index') }}" class="hover:bg-blue-700 p-2 block text-white">
                         <i class="fas fa-clipboard-list mr-2"></i> Controle de Vacinação
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('funcionarios') }}" class="hover:bg-blue-700 p-2 block text-white">
+                    <a href="{{ route('funcionarios.index') }}" class="hover:bg-blue-700 p-2 block text-white">
                         <i class="fas fa-users mr-2"></i> Funcionários
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('vacinas') }}" class="hover:bg-blue-700 p-2 block text-white">
+                    <a href="{{ route('vacinas.index') }}" class="hover:bg-blue-700 p-2 block text-white">
                         <i class="fas fa-syringe mr-2"></i> Vacinas
                     </a>
                 </li>
@@ -55,30 +55,33 @@
                 </div>
                 <ul class="mt-4">
                     <li>
-                        <a href="{{ route('dashboard') }}" class="hover:bg-blue-700 p-2 block text-white">
+                        <a href="{{ route('dashboard.index') }}" class="hover:bg-blue-700 p-2 block text-white">
                             <i class="fas fa-chart-line mr-2"></i> Dashboard
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('controle') }}" class="hover:bg-blue-700 p-2 block text-white">
+                        <a href="{{ route('controles.index') }}" class="hover:bg-blue-700 p-2 block text-white">
                             <i class="fas fa-clipboard-list mr-2"></i> Controle de Vacinação
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('funcionarios') }}" class="hover:bg-blue-700 p-2 block text-white">
+                        <a href="{{ route('funcionarios.index') }}" class="hover:bg-blue-700 p-2 block text-white">
                             <i class="fas fa-users mr-2"></i> Funcionários
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('vacinas') }}" class="hover:bg-blue-700 p-2 block text-white">
+                        <a href="{{ route('vacinas.index') }}" class="hover:bg-blue-700 p-2 block text-white">
                             <i class="fas fa-syringe mr-2"></i> Vacinas
                         </a>
                     </li>
-                    <li>
-                        <a href="#" onclick="confirmLogout()" class="hover:bg-blue-700 p-2 block text-white">
-                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
-                        </a>
-                    </li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                        <li>
+                            <a href="#" onclick="confirmLogout()" class="hover:bg-blue-700 p-2 block text-white">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                            </a>
+                        </li>
+                    </form>
                 </ul>
             </div>
         </div>

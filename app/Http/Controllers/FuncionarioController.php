@@ -1,6 +1,4 @@
 <?php
-
-namespace App\Http\Controllers;
 namespace App\Http\Controllers;
 
 use App\Models\Funcionario;
@@ -11,37 +9,39 @@ class FuncionarioController extends Controller
     public function index()
     {
         $funcionarios = Funcionario::all();
-        return response()->json($funcionarios, 200);
+        return view('funcionarios.index', compact('funcionarios'));
+    }
+
+    public function create()
+    {
+//        return view('funcionarios.create');
     }
 
     public function store(FuncionarioRequest $request)
     {
-        $funcionario = Funcionario::create($request->validated());
-        return response()->json([
-            'message' => 'Funcionário criado com sucesso.',
-            'funcionario' => $funcionario
-        ], 201);
+        Funcionario::create($request->validated());
+        return redirect()->route('funcionarios.index')->with('success', 'Funcionário criado com sucesso.');
     }
 
     public function show(Funcionario $funcionario)
     {
-        return response()->json($funcionario, 200);
+//        return view('funcionarios.show', compact('funcionario'));
+    }
+
+    public function edit(Funcionario $funcionario)
+    {
+//        return view('funcionarios.edit', compact('funcionario'));
     }
 
     public function update(FuncionarioRequest $request, Funcionario $funcionario)
     {
         $funcionario->update($request->validated());
-        return response()->json([
-            'message' => 'Funcionário atualizado com sucesso.',
-            'funcionario' => $funcionario
-        ], 200);
+        return redirect()->route('funcionarios.index')->with('success', 'Funcionário atualizado com sucesso.');
     }
 
     public function destroy(Funcionario $funcionario)
     {
         $funcionario->delete();
-        return response()->json([
-            'message' => 'Funcionário removido com sucesso.'
-        ], 200);
+        return redirect()->route('funcionarios.index')->with('success', 'Funcionário removido com sucesso.');
     }
 }
