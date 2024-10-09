@@ -63,6 +63,9 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="mt-4">
+                            {{ $relatorios->links() }}
+                        </div>
                     @endif
                 </div>
             </div>

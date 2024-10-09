@@ -15,7 +15,8 @@ class DashboardController extends Controller
         $totalFuncionarios = Funcionario::count();
         $vacinados = Funcionario::whereHas('vacinas')->count();
         $naoVacinados = Funcionario::whereDoesntHave('vacinas')->count();
-        $relatorios = Relatorio::orderBy('created_at', 'desc')->get();
+
+        $relatorios = Relatorio::orderBy('created_at', 'desc')->paginate(10);
 
         $porcentagemVacinados = $totalFuncionarios > 0 ? ($vacinados / $totalFuncionarios) * 100 : 0;
         $porcentagemNaoVacinados = $totalFuncionarios > 0 ? ($naoVacinados / $totalFuncionarios) * 100 : 0;
