@@ -15,9 +15,11 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::post('/dashboard/gerar-relatorio-nao-vacinados', [DashboardController::class, 'gerarRelatorioNaoVacinados'])->name('dashboard.gerarRelatorioNaoVacinados');
     Route::get('/controles/funcionario/{funcionario}/vacina', [ControleController::class, 'create'])->name('controles.vacina');
     Route::resource('/controles', ControleController::class);
     Route::resource('/funcionarios', FuncionarioController::class);
     Route::resource('/vacinas', VacinaController::class);
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 });
