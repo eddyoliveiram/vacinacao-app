@@ -3,18 +3,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Vacina;
 use App\Http\Requests\VacinaRequest;
+use Illuminate\Http\Request;
 
 class VacinaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $vacinas = Vacina::all();
+        $search = $request->input('search');
+
+        $vacinas = Vacina::when($search, function ($query, $search) {
+            return $query->where('nome', 'ilike', "%{$search}%")
+                ->orWhere('lote', 'ilike', "%{$search}%");
+        })
+            ->orderBy('nome', 'asc')
+            ->paginate(5);
+
         return view('vacinas.index', compact('vacinas'));
     }
 
+
     public function create()
     {
-//        return view('vacinas.create');
+        return view('vacinas.create');
     }
 
     public function store(VacinaRequest $request)
@@ -30,7 +40,7 @@ class VacinaController extends Controller
 
     public function edit(Vacina $vacina)
     {
-//        return view('vacinas.edit', compact('vacina'));
+        return view('vacinas.edit', compact('vacina'));
     }
 
     public function update(VacinaRequest $request, Vacina $vacina)

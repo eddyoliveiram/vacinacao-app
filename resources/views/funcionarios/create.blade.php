@@ -20,7 +20,7 @@
 
         <div class="mb-4">
             <label for="cpf" class="block text-gray-700 text-sm font-bold mb-2">CPF</label>
-            <input type="text" id="cpf" name="cpf" x-mask="999.999.999-99" value="{{ old('cpf') }}" required
+            <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" x-mask="999.999.999-99" value="{{ old('cpf') }}" required
                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             @error('cpf')
             <span class="text-red-500 text-sm">{{ $message }}</span>

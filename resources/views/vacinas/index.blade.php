@@ -1,27 +1,40 @@
-{{-- vacinas.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Vacinas')
 
 @section('content')
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                title: 'Sucesso!',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
     <h2 class="text-2xl font-semibold mb-6">Vacinas</h2>
 
     <div class="container mx-auto">
 
-        <div class="flex items-center mb-6">
-            <div class="flex-grow">
-                <input type="text" name="search" placeholder="Pesquisar por nome ou lote"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <form method="GET" action="{{ route('vacinas.index') }}">
+            <div class="flex items-center mb-6">
+                <div class="flex-grow">
+                    <input type="text" name="search" placeholder="Pesquisar por nome ou lote"
+                           value="{{ request('search') }}"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button type="submit" class="ml-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 flex-shrink-0">
+                    <i class="fas fa-search"></i> Pesquisar
+                </button>
             </div>
-            <button class="ml-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 flex-shrink-0">
-                <i class="fas fa-search"></i> Pesquisar
-            </button>
-        </div>
+        </form>
 
         <div class="flex mb-4">
-            <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" onclick="abrirModalVacina('adicionar')">
+            <a href="{{ route('vacinas.create') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                 <i class="fas fa-plus-circle"></i> Adicionar Vacina
-            </button>
+            </a>
         </div>
 
         <div class="overflow-x-auto mt-4">
@@ -31,29 +44,41 @@
                     <th class="px-4 py-2 text-left font-semibold">Nome</th>
                     <th class="px-4 py-2 text-left font-semibold">Lote</th>
                     <th class="px-4 py-2 text-left font-semibold">Data de Validade</th>
-                    <th class="px-4 py-2 text-center font-semibold">Ações</th>
+                    <th class="px-4 py-2 text-center font-semibold" style="width: 20%">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="border-b">
-                    <td class="px-4 py-2">{{ 'Vacina A' }}</td>
-                    <td class="px-4 py-2">{{ 'Lote123' }}</td>
-                    <td class="px-4 py-2">{{ '01/12/2025' }}</td>
-                    <td class="px-4 py-2 text-center">
-                        <button class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 mr-2"
-                                data-bs-toggle="modal" data-bs-target="#vacinaModal">
-                            <i class="fas fa-edit"></i> Editar
-                        </button>
-                        <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
-                            <i class="fas fa-trash-alt"></i> Excluir
-                        </button>
-                    </td>
-                </tr>
+                @foreach ($vacinas as $vacina)
+                    <tr class="border-b">
+                        <td class="px-4 py-2">{{ $vacina->nome }}</td>
+                        <td class="px-4 py-2">{{ $vacina->lote }}</td>
+                        <td class="px-4 py-2">{{ \Carbon\Carbon::parse($vacina->data_validade)->format('d/m/Y') }}</td>
+                        <td class="px-4 py-2 text-center">
+                            <!-- Botão de editar -->
+                            <button onclick="window.location.href='{{ route('vacinas.edit', $vacina->id) }}'" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 mr-2">
+                                <i class="fas fa-edit"></i>
+                            </button>
+
+                            <!-- Botão de excluir -->
+                            <form action="{{ route('vacinas.destroy', $vacina->id) }}" method="POST" class="inline-block" id="delete-form-{{ $vacina->id }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" onclick="confirmDelete({{ $vacina->id }})" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
+
+        <div class="mt-4">
+            {{ $vacinas->links() }}
+        </div>
     </div>
 
-    @include('partials.vacina-modal')
-
 @endsection
+
+<script src="{{ asset('js/vacinas/confirmDelete.js') }}"></script>
