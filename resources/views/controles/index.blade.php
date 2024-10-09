@@ -94,26 +94,9 @@
 
 
         <div class="mt-6">
-            {{ $funcionarios->appends(request()->query())->links() }}
+            {{ $funcionarios->links() }}
         </div>
     </div>
 @endsection
 
-<script>
-    function confirmDelete(controleId) {
-        Swal.fire({
-            title: 'Tem certeza?',
-            text: "Você não poderá reverter esta ação!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sim, excluir!',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('delete-form-' + controleId).submit();
-            }
-        });
-    }
-</script>
+<script src="{{ asset('js/controles/confirmDelete.js') }}"></script>

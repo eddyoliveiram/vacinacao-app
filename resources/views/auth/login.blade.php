@@ -22,6 +22,10 @@
                     <div class="relative">
                         <input type="password" id="password" name="password" value="admin"
                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button type="button" id="togglePasswordVisibility" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                            <!-- Use um ícone simples ou texto para testar -->
+                            <span id="eyeIcon">Mostrar</span>
+                        </button>
                     </div>
                     @error('password')
                     <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
@@ -33,4 +37,20 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        const togglePasswordVisibility = document.querySelector('#togglePasswordVisibility');
+        const passwordInput = document.querySelector('#password');
+        const eyeIcon = document.querySelector('#eyeIcon');
+
+        togglePasswordVisibility.addEventListener('click', function () {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+
+            // Atualizar o texto do botão para indicar o estado
+            eyeIcon.textContent = isPassword ? 'Ocultar' : 'Mostrar';
+        });
+    </script>
 @endsection

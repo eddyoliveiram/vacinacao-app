@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Rules\ValidaCpf;
 
 class FuncionarioRequest extends FormRequest
 {
@@ -21,6 +22,7 @@ class FuncionarioRequest extends FormRequest
                 'required',
                 'string',
                 'max:14',
+                new ValidaCpf(),
                 Rule::unique('funcionarios')->ignore($funcionarioId),
             ],
             'nome_completo' => 'required|string|max:255',

@@ -74,17 +74,18 @@
                             <i class="fas fa-syringe mr-2"></i> Vacinas
                         </a>
                     </li>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                        <li>
-                            <a href="#" onclick="confirmLogout()" class="hover:bg-blue-700 p-2 block text-white">
-                                <i class="fas fa-sign-out-alt mr-2"></i> Logout
-                            </a>
-                        </li>
-                    </form>
+                    <li>
+                        <a href="#" onclick="confirmLogout()" class="hover:bg-blue-700 p-2 block text-white">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+<script src="{{ asset('js/partials/mobileMenuAction.js') }}"></script>
 <script src="{{ asset('js/auth/logout.js') }}"></script>
