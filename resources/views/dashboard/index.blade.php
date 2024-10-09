@@ -25,8 +25,6 @@
         </div>
     </section>
 
-
-
     <form action="{{ route('dashboard.gerarRelatorioNaoVacinados') }}" method="POST" class="mt-6">
         @csrf
         <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">
@@ -34,9 +32,14 @@
         </button>
     </form>
 
-    @if (session('status'))
-        <div class="mt-4 bg-green-200 text-green-800 p-4 rounded-md">
-            {{ session('status') }}
-        </div>
+    @if(session('status'))
+        <script>
+            Swal.fire({
+                title: 'Sucesso!',
+                text: '{{ session('status') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </script>
     @endif
 @endsection

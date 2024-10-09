@@ -34,10 +34,10 @@ class GerarRelatorioNaoVacinados implements ShouldQueue
     {
         $naoVacinados = Funcionario::whereDoesntHave('vacinas')->get();
 
-        $csvData = "Nome Completo,CPF\n";
+        $csvData = "Nome Completo;CPF\n";
 
         foreach ($naoVacinados as $funcionario) {
-            $csvData .= "{$funcionario->nome_completo},{$funcionario->cpf}\n";
+            $csvData .= "{$funcionario->nome_completo};{$funcionario->cpf}\n";
         }
 
         if (!Storage::exists('relatorios')) {
