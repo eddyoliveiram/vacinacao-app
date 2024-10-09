@@ -91,8 +91,6 @@
 
         </div>
 
-
-
         <div class="mt-6">
             {{ $funcionarios->links() }}
         </div>

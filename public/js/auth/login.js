@@ -1,9 +1,11 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const togglePasswordVisibility = document.querySelector('#togglePasswordVisibility');
-    const passwordInput = document.querySelector('#password');
+const togglePasswordVisibility = document.querySelector('#togglePasswordVisibility');
+const passwordInput = document.querySelector('#password');
+const eyeIcon = document.querySelector('#eyeIcon');
 
-    togglePasswordVisibility.addEventListener('click', function () {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-    });
+togglePasswordVisibility.addEventListener('click', function () {
+    const isPassword = passwordInput.type === 'password';
+    passwordInput.type = isPassword ? 'text' : 'password';
+
+    // Atualizar o texto do botão para indicar o estado
+    eyeIcon.textContent = isPassword ? 'Ocultar' : 'Mostrar';
 });
