@@ -54,23 +54,23 @@
                                 <tbody>
                                 @foreach ($funcionario->vacinas as $vacina)
                                     <tr class="border-b hover:bg-gray-100">
-                                        <td class="px-4 py-2">{{ $vacina->pivot->dose }}</td>
+                                        <td class="px-4 py-2">{{ $vacina->pivot->dose . 'º' }}</td>
                                         <td class="px-4 py-2">{{ $vacina->nome }}</td>
                                         <td class="px-4 py-2">{{ $vacina->lote }}</td>
-                                        <td class="px-4 py-2">{{ \Carbon\Carbon::parse($vacina->pivot->data_aplicacao)->format('Y-m-d') }}</td>
+                                        <td class="px-4 py-2">{{ \Carbon\Carbon::parse($vacina->pivot->data_aplicacao)->format('d/m/Y') }}</td>
                                         <td class="px-4 py-2 text-center">
-
-                                            <a href="{{ route('controles.editVacina', ['funcionario' => $funcionario->id, 'vacina' => $vacina->id]) }}" class="text-blue-600 hover:text-blue-800 mr-2 text-lg">
+                                            <a href="{{ route('controles.edit', $vacina->pivot->id) }}" class="text-blue-600 hover:text-blue-800 text-lg mr-4">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('controles.destroyVacina', ['funcionario' => $funcionario->id, 'vacina' => $vacina->id]) }}" method="POST" class="inline-block" id="delete-form-{{ $funcionario->id }}-{{ $vacina->id }}">
+                                            <form action="{{ route('controles.destroy', $vacina->pivot->id) }}" method="POST" id="delete-form-{{ $vacina->pivot->id }}" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" onclick="confirmDelete({{ $funcionario->id }}, {{ $vacina->id }})" class="text-red-600 hover:text-red-800 text-lg">
+                                                <button type="button" onclick="confirmDelete({{ $vacina->pivot->id }})" class="text-red-600 hover:text-red-800 text-lg">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </form>
                                         </td>
+
                                     </tr>
 
                                 @endforeach

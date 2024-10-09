@@ -13,7 +13,6 @@ class ControleController extends Controller
     {
         $search = $request->input('search');
 
-        // Carrega os funcionários com suas vacinas (automaticamente com a tabela de controle como pivô)
         $funcionarios = Funcionario::with(['vacinas'])
             ->when($search, function ($query, $search) {
                 return $query->where('nome_completo', 'ilike', "%{$search}%")
@@ -46,20 +45,24 @@ class ControleController extends Controller
         return redirect()->route('controles.index')->with('success', 'Vacina adicionada com sucesso.');
     }
 
-    public function edit(Funcionario $funcionario, Vacina $vacina)
+    public function edit($id)
     {
-        $controle = $funcionario->vacinas()->where('id_vacina', $vacina->id)->firstOrFail();
+        $controle = Controle::findOrFail($id);
+        $funcionario = Funcionario::findOrFail($controle->id_funcionario);
         $vacinas = Vacina::all();
-        return view('controles.edit', compact('funcionario', 'vacina', 'controle', 'vacinas'));
+
+        return view('controles.edit', compact('controle', 'funcionario', 'vacinas'));
     }
 
 
-    public function update(ControleRequest $request, Controle $controle)
+    public function update(ControleRequest $request, $id)
     {
         $validatedData = $request->validated();
 
-        $controle->funcionario->vacinas()->detach($controle->vacina_id);
-        $controle->funcionario->vacinas()->attach($validatedData['id_vacina'], [
+        $controle = Controle::findOrFail($id);
+
+        $controle->update([
+            'id_vacina' => $validatedData['id_vacina'],
             'dose' => $validatedData['dose'],
             'data_aplicacao' => $validatedData['data_aplicacao'],
         ]);
@@ -67,9 +70,13 @@ class ControleController extends Controller
         return redirect()->route('controles.index')->with('success', 'Vacina atualizada com sucesso.');
     }
 
-    public function destroy(Funcionario $funcionario, Vacina $vacina)
+
+    public function destroy($id)
     {
-        $funcionario->vacinas()->detach($vacina->id);
+        $controle = Controle::findOrFail($id);
+        $controle->delete();
+
         return redirect()->route('controles.index')->with('success', 'Vacina removida com sucesso.');
     }
+
 }

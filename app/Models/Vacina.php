@@ -20,7 +20,7 @@ class Vacina extends Model
     public function funcionarios()
     {
         return $this->belongsToMany(Funcionario::class, 'controle', 'id_vacina', 'id_funcionario')
-            ->withPivot('dose', 'data_aplicacao')
+            ->withPivot('id','dose', 'data_aplicacao')
             ->withTimestamps();
     }
 }

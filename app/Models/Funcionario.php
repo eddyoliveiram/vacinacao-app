@@ -21,7 +21,7 @@ class Funcionario extends Model
     public function vacinas()
     {
         return $this->belongsToMany(Vacina::class, 'controle', 'id_funcionario', 'id_vacina')
-            ->withPivot('dose', 'data_aplicacao')
-            ->withTimestamps();
+            ->withPivot('id', 'dose', 'data_aplicacao')
+            ->orderBy('controle.dose');
     }
 }
