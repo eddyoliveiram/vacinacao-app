@@ -10,16 +10,20 @@ class VacinaController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $cacheKey = 'vacinas_' . ($search ? md5($search) : 'all');
 
-        $vacinas = Vacina::when($search, function ($query, $search) {
-            return $query->where('nome', 'ilike', "%{$search}%")
-                ->orWhere('lote', 'ilike', "%{$search}%");
-        })
-            ->orderBy('nome', 'asc')
-            ->paginate(5);
+        $vacinas = cache()->remember($cacheKey, 10, function () use ($search) {
+            return Vacina::when($search, function ($query, $search) {
+                return $query->where('nome', 'ilike', "%{$search}%")
+                    ->orWhere('lote', 'ilike', "%{$search}%");
+            })
+                ->orderBy('nome', 'asc')
+                ->paginate(5);
+        });
 
         return view('vacinas.index', compact('vacinas'));
     }
+
 
 
     public function create()
