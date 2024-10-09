@@ -2,7 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Models\Funcionario;
+use App\Models\Relatorio;
+use App\Services\Relatorios\RelatorioInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Storage;
@@ -10,19 +11,23 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class GerarRelatorioNaoVacinados implements ShouldQueue
+class GerarRelatorioJob implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $relatorio;
+    protected $relatorioService;
 
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param Relatorio $relatorio
+     * @param RelatorioInterface $relatorioService
      */
-    public function __construct()
+    public function __construct(Relatorio $relatorio, RelatorioInterface $relatorioService)
     {
-
+        $this->relatorio = $relatorio;
+        $this->relatorioService = $relatorioService;
     }
 
     /**
@@ -32,22 +37,20 @@ class GerarRelatorioNaoVacinados implements ShouldQueue
      */
     public function handle()
     {
-        $naoVacinados = Funcionario::whereDoesntHave('vacinas')->get();
-
-        $csvData = "Nome Completo;CPF\n";
-
-        foreach ($naoVacinados as $funcionario) {
-            $csvData .= "{$funcionario->nome_completo};{$funcionario->cpf}\n";
-        }
+        $csvData = $this->relatorioService->gerarConteudo();
+        $filename = $this->relatorioService->getFilename();
 
         if (!Storage::exists('relatorios')) {
             Storage::makeDirectory('relatorios');
         }
 
-        $filename = 'relatorios/nao_vacinados_' . now()->format('Y_m_d_H_i_s') . '.csv';
         Storage::put($filename, $csvData);
+
+        $this->relatorio->update([
+            'caminho' => $filename,
+            'status' => 'concluido',
+        ]);
 
         Log::info("Report saved to {$filename}");
     }
-
 }
