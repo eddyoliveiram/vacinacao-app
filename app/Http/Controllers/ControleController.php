@@ -1,47 +1,75 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Controle;
 use App\Http\Requests\ControleRequest;
+use App\Models\Controle;
+use App\Models\Funcionario;
+use App\Models\Vacina;
+use Illuminate\Http\Request;
 
 class ControleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $controles = Controle::with('funcionario', 'vacina')->get();
-        return view('controle.index', compact('controles'));
+        $search = $request->input('search');
+
+        // Carrega os funcionários com suas vacinas (automaticamente com a tabela de controle como pivô)
+        $funcionarios = Funcionario::with(['vacinas'])
+            ->when($search, function ($query, $search) {
+                return $query->where('nome_completo', 'ilike', "%{$search}%")
+                    ->orWhere('cpf', 'ilike', "%{$search}%");
+            })
+            ->orderBy('nome_completo', 'asc')
+            ->paginate(3);
+
+        return view('controles.index', compact('funcionarios'));
     }
 
-    public function create()
+
+    public function create(Funcionario $funcionario)
     {
-//        return view('controle.create');
+        $vacinas = Vacina::all();
+        return view('controles.create', compact('funcionario', 'vacinas'));
     }
 
     public function store(ControleRequest $request)
     {
-        Controle::create($request->validated());
-        return redirect()->route('controles.index')->with('success', 'Aplicação registrada com sucesso.');
+        $validatedData = $request->validated();
+
+        $funcionario = Funcionario::find($validatedData['id_funcionario']);
+
+        $funcionario->vacinas()->attach($validatedData['id_vacina'], [
+            'dose' => $validatedData['dose'],
+            'data_aplicacao' => $validatedData['data_aplicacao'],
+        ]);
+
+        return redirect()->route('controles.index')->with('success', 'Vacina adicionada com sucesso.');
     }
 
-    public function show(Controle $controle)
+    public function edit(Funcionario $funcionario, Vacina $vacina)
     {
-//        return view('controle.show', compact('controle'));
+        $controle = $funcionario->vacinas()->where('id_vacina', $vacina->id)->firstOrFail();
+        $vacinas = Vacina::all();
+        return view('controles.edit', compact('funcionario', 'vacina', 'controle', 'vacinas'));
     }
 
-    public function edit(Controle $controle)
-    {
-//        return view('controle.edit', compact('controle'));
-    }
 
     public function update(ControleRequest $request, Controle $controle)
     {
-        $controle->update($request->validated());
-        return redirect()->route('controles.index')->with('success', 'Aplicação atualizada com sucesso.');
+        $validatedData = $request->validated();
+
+        $controle->funcionario->vacinas()->detach($controle->vacina_id);
+        $controle->funcionario->vacinas()->attach($validatedData['id_vacina'], [
+            'dose' => $validatedData['dose'],
+            'data_aplicacao' => $validatedData['data_aplicacao'],
+        ]);
+
+        return redirect()->route('controles.index')->with('success', 'Vacina atualizada com sucesso.');
     }
 
-    public function destroy(Controle $controle)
+    public function destroy(Funcionario $funcionario, Vacina $vacina)
     {
-        $controle->delete();
-        return redirect()->route('controles.index')->with('success', 'Aplicação removida com sucesso.');
+        $funcionario->vacinas()->detach($vacina->id);
+        return redirect()->route('controles.index')->with('success', 'Vacina removida com sucesso.');
     }
 }

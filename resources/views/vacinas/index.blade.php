@@ -54,16 +54,14 @@
                         <td class="px-4 py-2">{{ $vacina->lote }}</td>
                         <td class="px-4 py-2">{{ \Carbon\Carbon::parse($vacina->data_validade)->format('d/m/Y') }}</td>
                         <td class="px-4 py-2 text-center">
-                            <!-- Botão de editar -->
-                            <button onclick="window.location.href='{{ route('vacinas.edit', $vacina->id) }}'" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 mr-2">
+                            <button onclick="window.location.href='{{ route('vacinas.edit', $vacina->id) }}'" class="text-blue-600 hover:text-blue-800 mr-4 text-lg">
                                 <i class="fas fa-edit"></i>
                             </button>
 
-                            <!-- Botão de excluir -->
                             <form action="{{ route('vacinas.destroy', $vacina->id) }}" method="POST" class="inline-block" id="delete-form-{{ $vacina->id }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" onclick="confirmDelete({{ $vacina->id }})" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
+                                <button type="button" onclick="confirmDelete({{ $vacina->id }})" class="text-red-600 hover:text-red-800 text-lg">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>

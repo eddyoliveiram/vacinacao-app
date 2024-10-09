@@ -15,6 +15,9 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/controles/funcionario/{funcionario}/vacina', [ControleController::class, 'create'])->name('controles.vacina');
+    Route::get('/controles/funcionario/{funcionario}/vacina/{vacina}/edit', [ControleController::class, 'edit'])->name('controles.editVacina');
+    Route::delete('/controles/funcionario/{funcionario}/vacina/{vacina}', [ControleController::class, 'destroy'])->name('controles.destroyVacina');
     Route::resource('/controles', ControleController::class);
     Route::resource('/funcionarios', FuncionarioController::class);
     Route::resource('/vacinas', VacinaController::class);
