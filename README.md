@@ -1,66 +1,105 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Controle de Vacinação
 
-## About Laravel
+Este é um sistema para cadastro e controle dos funcionários de uma empresa que foram vacinados contra a COVID-19.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requisitos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Antes de começar, você precisará ter os seguintes itens instalados na sua máquina:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Docker](https://www.docker.com/)
+- Terminal Ubuntu ou outra dist (WSL 2)
+  
+## Passos para Configurar e Levantar a Aplicação
 
-## Learning Laravel
+### 1. Clonar o Repositório para o ambiente linux
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+git clone https://github.com/seu-usuario/controle-vacinacao.git
+cd controle-vacinacao
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2. Copiar o Arquivo `.env.example` para `.env`, já deixei com o example com as keys corretas para facilitar
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+cp .env.example .env
+```
 
-## Laravel Sponsors
+### 3. Instalar as Dependências
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Depois que os containers estiverem rodando, instale as dependências do Laravel:
 
-### Premium Partners
+```bash
+./vendor/bin/sail composer install
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 4. Manter aberto o Docker Desktop e subir os Containers Docker com Laravel Sail
 
-## Contributing
+Inicie os containers usando o Sail:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+./vendor/bin/sail up -d
+```
 
-## Code of Conduct
+Isso irá levantar a aplicação e o banco de dados. Certifique-se de que o Docker está rodando em sua máquina.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. Gerar a Chave da Aplicação
 
-## Security Vulnerabilities
+Gere a chave do aplicativo Laravel para ser usada no `.env`:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+./vendor/bin/sail artisan key:generate
+```
 
-## License
+### 6. Executar as Migrações E Seeders
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Execute as migrações para criar as tabelas no banco de dados:
+
+```bash
+./vendor/bin/sail artisan migrate fresh --seed
+```
+
+### 7. Manter as Filas Rodando
+
+Você pode rodar o worker de filas para processar os jobs em segundo plano:
+
+```bash
+./vendor/bin/sail artisan queue:work
+```
+
+### 8. Acessar a Aplicação
+
+A aplicação estará disponível em `http://localhost` ou na porta que você configurou no arquivo `.env`.
+
+## Tecnologias Utilizadas
+
+O sistema foi desenvolvido utilizando as seguintes tecnologias:
+
+- **Laravel Sail (Docker)**: Utilizado para fornecer um ambiente de desenvolvimento completo e padronizado, eliminando a necessidade de configuração manual de servidores e dependências locais. Laravel Sail facilita o uso de containers Docker para a aplicação Laravel, banco de dados, e serviços auxiliares como Redis.
+  
+- **Filas (Queues)**: Para processar tarefas em segundo plano, como o envio de emails e a geração de relatórios, foi utilizado o sistema de filas do Laravel. O processamento de jobs é feito de maneira assíncrona para melhorar a performance e a experiência do usuário.
+
+- **Pusher Websocket**: Usado para fornecer notificações em tempo real para os usuários. Com o Pusher Websockets, é possível disparar eventos do backend e capturá-los no frontend em tempo real.
+
+- **Laravel Echo**: É utilizado no frontend para escutar eventos de WebSocket e se comunicar com o Pusher. Laravel Echo simplifica a integração de WebSockets com a interface do usuário, facilitando a implementação de comunicação em tempo real.
+
+- **PostgreSQL**: O banco de dados utilizado na aplicação é o PostgreSQL. Ele foi escolhido pela sua robustez e conformidade com os padrões SQL, além de seu ótimo desempenho para sistemas transacionais.
+
+- **Tailwind CSS**: Toda a estilização da interface foi construída com o **Tailwind CSS**, um framework CSS utilitário que facilita a criação de layouts modernos, responsivos e altamente customizáveis sem escrever CSS personalizado.
+
+- **Alpine.js**: Para comportamentos dinâmicos no frontend, foi utilizado **Alpine.js**, uma biblioteca leve de JavaScript que permite adicionar interatividade e reatividade à interface sem a complexidade de frameworks maiores como Vue.js ou React.
+
+
+## Comandos Úteis
+
+### Limpar o Cache
+
+Se precisar limpar o cache de configuração:
+
+```bash
+./vendor/bin/sail artisan config:clear
+```
+
+## Licença
+
+Este projeto está sob a licença MIT.
