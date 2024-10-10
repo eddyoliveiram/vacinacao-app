@@ -37,7 +37,7 @@ class GerarRelatorioJob implements ShouldQueue
      */
     public function handle()
     {
-        sleep(7);
+        sleep(4);
 
         $csvData = $this->relatorioService->gerarConteudo();
         $filename = $this->relatorioService->getFilename();

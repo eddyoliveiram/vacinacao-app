@@ -22,11 +22,10 @@
 
         <div class="mb-4">
             <label for="cpf" class="block text-gray-700 text-sm font-bold mb-2">CPF</label>
-            <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" x-mask="999.999.999-99" value="{{ old('cpf', $funcionario->cpf) }}"  required
-                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            @error('cpf')
-            <span class="text-red-500 text-sm">{{ $message }}</span>
-            @enderror
+            <!-- Exibição apenas do CPF anonimizando conforme o accessor -->
+            <p class="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100">
+                {{ $funcionario->cpf }} <!-- Esse campo já terá o formato 123.***.***-** -->
+            </p>
         </div>
 
         <div class="mb-4">
@@ -47,10 +46,10 @@
             @enderror
         </div>
 
-        <div class="mb-4">
+        <div class="mb-4 ">
             <label for="comorbidade" class="block text-gray-700 text-sm font-bold mb-2">Portador de Comorbidade?</label>
             <select id="comorbidade" name="comorbidade" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="bg-white w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value="0" {{ old('comorbidade', $funcionario->comorbidade) == 0 ? 'selected' : '' }}>Não</option>
                 <option value="1" {{ old('comorbidade', $funcionario->comorbidade) == 1 ? 'selected' : '' }}>Sim</option>
             </select>

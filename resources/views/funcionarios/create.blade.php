@@ -48,7 +48,7 @@
         <div class="mb-4">
             <label for="comorbidade" class="block text-gray-700 text-sm font-bold mb-2">Portador de Comorbidade?</label>
             <select id="comorbidade" name="comorbidade" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="bg-white w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value="0" {{ old('comorbidade') == 0 ? 'selected' : '' }}>Não</option>
                 <option value="1" {{ old('comorbidade') == 1 ? 'selected' : '' }}>Sim</option>
             </select>

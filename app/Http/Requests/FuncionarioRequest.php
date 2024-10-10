@@ -19,7 +19,7 @@ class FuncionarioRequest extends FormRequest
 
         return [
             'cpf' => [
-                'required',
+                $this->isMethod('post') ? 'required' : 'sometimes',
                 'string',
                 'max:14',
                 new ValidaCpf(),

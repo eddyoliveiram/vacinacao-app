@@ -24,4 +24,9 @@ class Funcionario extends Model
             ->withPivot('id', 'dose', 'data_aplicacao')
             ->orderBy('controle.dose');
     }
+
+    public function getCpfAttribute($value)
+    {
+        return substr($value, 0, 3) . '.***.***-**';
+    }
 }
