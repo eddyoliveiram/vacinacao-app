@@ -30,7 +30,7 @@ cp .env.example .env
 Depois que os containers estiverem rodando, instale as dependências do Laravel:
 
 ```bash
-./vendor/bin/sail composer install
+composer install
 ```
 
 ### 4. Manter aberto o Docker Desktop e subir os Containers Docker com Laravel Sail
@@ -56,7 +56,7 @@ Gere a chave do aplicativo Laravel para ser usada no `.env`:
 Execute as migrações para criar as tabelas no banco de dados:
 
 ```bash
-./vendor/bin/sail artisan migrate fresh --seed
+./vendor/bin/sail artisan migrate:fresh --seed
 ```
 
 ### 7. Manter as Filas Rodando
