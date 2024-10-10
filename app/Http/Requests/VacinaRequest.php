@@ -20,7 +20,7 @@ class VacinaRequest extends FormRequest
             'data_validade' => [
                 'required',
                 'date',
-                'after_or_equal:' . Carbon::now()->format('d/m/Y'),
+//                'after_or_equal:' . Carbon::now()->format('d/m/Y'),
             ],
         ];
     }
