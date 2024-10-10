@@ -15,7 +15,7 @@ Antes de começar, você precisará ter os seguintes itens instalados na sua má
 ### 1. Clonar o Repositório para o ambiente linux
 
 ```bash
-git clone https://github.com/seu-usuario/controle-vacinacao.git
+git clone https://github.com/eddyoliveiram/vacinacao-app .git
 cd controle-vacinacao
 ```
 
