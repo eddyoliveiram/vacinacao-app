@@ -70,6 +70,7 @@
                 @endforeach
                 </tbody>
             </table>
+            <h2 class="text-xl font-semibold mb-6 mt-4 text-center"><text class="text-red-600">(Query cacheada por 10s)</text></h2>
         </div>
 
         <div class="mt-4">

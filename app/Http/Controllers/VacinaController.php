@@ -10,7 +10,9 @@ class VacinaController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $cacheKey = 'vacinas_' . ($search ? md5($search) : 'all');
+        $page = $request->input('page', 1);
+
+        $cacheKey = 'vacinas_' . ($search ? md5($search) : 'all') . '_page_' . $page;
 
         $vacinas = cache()->remember($cacheKey, 10, function () use ($search) {
             return Vacina::when($search, function ($query, $search) {
@@ -23,8 +25,6 @@ class VacinaController extends Controller
 
         return view('vacinas.index', compact('vacinas'));
     }
-
-
 
     public function create()
     {

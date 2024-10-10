@@ -40,6 +40,7 @@
                         <table class="min-w-full bg-white">
                             <thead>
                             <tr>
+                                <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-700">Nº</th>
                                 <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-700">Nome do Relatório</th>
                                 <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-700">Data de Geração</th>
                                 <th class="py-2 px-4 border-b border-gray-200 text-left text-sm font-semibold text-gray-700">Status</th>
@@ -47,8 +48,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($relatorios as $relatorio)
+                            @foreach($relatorios as $r => $relatorio)
                                 <tr class="hover:bg-gray-100">
+                                    <td class="py-2 px-4 border-b border-gray-200">{{ $r+1 }}</td>
                                     <td class="py-2 px-4 border-b border-gray-200">{{ $relatorio->nome }}</td>
                                     <td class="py-2 px-4 border-b border-gray-200">{{ $relatorio->created_at->format('d/m/Y H:i:s') }}</td>
                                     <td class="py-2 px-4 border-b border-gray-200">{{ $relatorio->status }}</td>

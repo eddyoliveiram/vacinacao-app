@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\RelatorioPronto;
 use App\Models\Relatorio;
 use App\Services\Relatorios\RelatorioInterface;
 use Illuminate\Bus\Queueable;
@@ -52,6 +53,8 @@ class GerarRelatorioJob implements ShouldQueue
             'caminho' => $filename,
             'status' => 'concluido',
         ]);
+
+        event(new RelatorioPronto($this->relatorio));
 
         Log::info("Report saved to {$filename}");
     }
