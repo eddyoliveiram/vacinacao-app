@@ -11,7 +11,7 @@
                 @csrf
                 <div class="mb-4">
                     <label for="login" class="block text-gray-700 text-sm font-bold mb-2">Login</label>
-                    <input type="text" id="login" name="login" value="{{ old('login') ?? 'admin' }}"
+                    <input required type="text" id="login" name="login" value="{{ old('login') ?? 'admin' }}"
                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     @error('login')
                     <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
@@ -20,7 +20,7 @@
                 <div class="mb-6">
                     <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Senha</label>
                     <div class="relative">
-                        <input type="password" id="password" name="password" value="admin"
+                        <input required type="password" id="password" name="password" value="admin"
                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <button type="button" id="togglePasswordVisibility" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
                             <!-- Use um ícone simples ou texto para testar -->
