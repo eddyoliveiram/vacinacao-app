@@ -16,7 +16,7 @@ Antes de começar, você precisará ter os seguintes itens instalados na sua má
 
 ```bash
 git clone https://github.com/eddyoliveiram/vacinacao-app.git
-cd controle-vacinacao
+cd vacinacao-app
 ```
 
 ### 2. Copiar o Arquivo `.env.example` para `.env`, já deixei com o example com as keys corretas para facilitar
