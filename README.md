@@ -71,6 +71,11 @@ Você pode rodar o worker de filas para processar os jobs em segundo plano:
 
 A aplicação estará disponível em `http://localhost` ou na porta que você configurou no arquivo `.env`.
 
+Credenciais de Acesso:
+
+- Login: admin
+- Senha: admin
+
 ## Tecnologias Utilizadas
 
 O sistema foi desenvolvido utilizando as seguintes tecnologias:
